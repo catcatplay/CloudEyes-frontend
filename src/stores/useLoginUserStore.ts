@@ -5,29 +5,28 @@ import {defineStore} from 'pinia'
  * 存储登录用户信息的状态
  */
 export const useLoginUserStore = defineStore('loginUser', () => {
-  const loginUser = ref<any>({
-    userName: '未登录',
-  })
-
-  async function fetchLoginUser() {
-    // const res = await getCurrentUser();
-    // if (res.data.code === 0 && res.data.data) {
-    //   loginUser.value = res.data.data;
-    // }
-    // 测试用户登录，3 秒后自动登录
-    setTimeout(() => {
-      loginUser.value = { userName: '测试用户', id: 1 }
-    }, 3000)
-  }
+  const initialUser = sessionStorage.getItem('userInfo')
+  const loginUser = ref<API.UserVo>((
+    initialUser
+      ? JSON.parse(initialUser)
+      : { userName: '未登录' }
+  ))
 
   /**
    * 设置登录用户
-   * @param newLoginUser
+   * @param user
    */
-  function setLoginUser(newLoginUser: any) {
-    loginUser.value = newLoginUser
+  function setLoginUser(user: API.UserVo) {
+    loginUser.value = user
+  }
+
+  /**
+   * 清除登录用户
+   */
+  function clearLoginUser() {
+    loginUser.value = { userName: '未登录' }
   }
 
   // 返回
-  return { loginUser, fetchLoginUser, setLoginUser }
+  return { loginUser, setLoginUser, clearLoginUser }
 })
