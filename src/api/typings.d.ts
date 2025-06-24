@@ -1,5 +1,5 @@
 declare namespace API {
-  type BaseResponse = {
+  type BaseResponse<T> = {
     code?: number
     data?: T
     message?: string
@@ -21,6 +21,14 @@ declare namespace API {
     sortField?: string
     /** 排序顺序（默认升序） */
     sortOrder?: string
+  }
+
+  type Page<T> = {
+    current?: number
+    pages?: number
+    records?: T[]
+    size?: number
+    total?: number
   }
 
   type UserVo = BaseEntity & {

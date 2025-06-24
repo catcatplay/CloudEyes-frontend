@@ -86,9 +86,7 @@ const searchParams = reactive<API.UserDto>({
 
 // 获取数据
 const fetchData = async () => {
-  const res = await pageList({
-    ...searchParams,
-  })
+  const res = await pageList(searchParams)
   if (res.data.code === 0 && res.data.data) {
     dataList.value = res.data.data.records ?? []
     total.value = res.data.data.total ?? 0
@@ -114,7 +112,7 @@ const pagination = computed(() => {
 })
 
 // 表格变化之后，重新获取数据
-const doTableChange = (page: any) => {
+const doTableChange = (page: API.UserDto) => {
   searchParams.current = page.current
   searchParams.pageSize = page.pageSize
   fetchData()

@@ -53,7 +53,7 @@ const formState = reactive<API.UserDto>({
  * 提交表单
  * @param values
  */
-const handleSubmit = async (values: any) => {
+const handleSubmit = async (values: API.UserDto) => {
   // 校验两次输入的密码是否一致
   if (values.userPassword !== values.checkPassword) {
     message.error('两次输入的密码不一致')
